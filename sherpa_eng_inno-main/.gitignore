@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.env
+.pytest_cache/
+# raw downloads are large and reproducible: do not commit them
+data/raw/*
+!data/raw/.gitkeep
+!data/raw/README.md
+*.nc

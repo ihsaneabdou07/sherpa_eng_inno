@@ -1,0 +1,13 @@
+---
+title: "Analyse de Viabilité des E-Fuels au Maroc - Sherpa Engineering"
+author: "Prototype d'Aide à la Décision"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+library(readxl)
+library(dplyr)
+library(ggplot2)
+library(reticulate) # Pour appeler Python

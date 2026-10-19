@@ -1,0 +1,15 @@
+numpy
+pandas
+scipy
+matplotlib
+plotly
+pulp
+pymoo
+streamlit
+pyyaml
+openpyxl
+pytest
+requests
+cdsapi
+xarray
+netcdf4

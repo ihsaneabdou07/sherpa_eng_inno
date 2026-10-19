@@ -1,0 +1,73 @@
+Source	Scenario_Year	Temp	Cost_eu_KW	Efficiency_LHV	Technologie	Ref_year_min	Pub_Year	Plant_size_scale.(MW)	p(Kpa)	Heating.Value	Capacity_Function(%)	Type	Method_Lit	Eur_Factor	Category	Bracket	Horizon
+Brynolf	2017	Low	1100	65,00 %	Alcalin	2010	2018	Small	null	LHV	null	Journal_Article	Original_Review_Multiple_Sources	2015	electrolysis	2020	2020
+Brynolf	2017	Low	1900	62,00 %	PEM	2010	2018	Small	null	LHV	null	Journal_Article	Original_Review_Multiple_Sources	2015	electrolysis	2020	2020
+IndWEDE	2017	Low	1460	64,30 %	PEM	2017	2018	Large	null	LHV	0,8	Report	Original_Analysis_w_Industry_Sources	null	electrolysis	2020	2020
+IndWEDE	2017	Low	700	64,30 %	Alcalin	2017	2018	Large	null	LHV	0,8	Report	Original_Analysis_w_Industry_Sources	null	electrolysis	2020	2020
+IndWEDE	2017	High	1410	81,00 %	SOEC	2017	2018	Large	null	LHV	0,8	Report	Original_Analysis_w_Industry_Sources	null	electrolysis	2020	2020
+FCH	2017	Low	1200	57,00 %	Alcalin	2017	2017	Small	1	LHV	null	Report	Original_Analysis_w_Industry_Sources	2017	electrolysis	2020	2020
+FCH	2017	Low	1500	57,00 %	PEM	2017	2017	Small	30	LHV	null	Report	Original_Analysis_w_Industry_Sources	2017	electrolysis	2020	2020
+FCH	2017	Low	830	null	Alcalin	2017	2017	Medium	1	null	null	Report	Original_Analysis_w_Industry_Sources	2017	electrolysis	2020	2020
+FCH	2017	Low	1300	null	PEM	2017	2017	Medium	30	null	null	Report	Original_Analysis_w_Industry_Sources	2017	electrolysis	2020	2020
+FCH	2017	Low	750	null	Alcalin	2017	2017	Large	1	null	null	Report	Original_Analysis_w_Industry_Sources	2017	electrolysis	2020	2020
+FCH	2017	Low	1200	null	PEM	2017	2017	Large	30	null	null	Report	Original_Analysis_w_Industry_Sources	2017	electrolysis	2020	2020
+Matute 	2017	Low	830	52,00 %	Alcalin	2014	2019	Small	15 - 30	LHV	null	Journal_Article	Secondary_Source	null	electrolysis	2020	2020
+Matute 	2017	Low	1300	61,00 %	PEM	2014	2019	Small	15 - 30	LHV	null	Journal_Article	Secondary_Source	null	electrolysis	2020	2020
+Siemens 	2017	Low	1250	null	PEM	2017	2017	Small	null	null	null	Interview	Original_Review_Multiple_Sources	2016	electrolysis	2020	2020
+Siemens 	2017	Low	1000	null	Alcalin	2017	2017	Small	null	null	null	Interview	Original_Review_Multiple_Sources	2016	electrolysis	2020	2020
+Microbenergy	2017	Low	1550	null	PEM	2017	2017	Small	null	null	null	Interview	Original_Review_Multiple_Sources	2016	electrolysis	2020	2020
+Proost 	2018	Low	750	74,00 %	Alcalin	2014	2018	Small	1-15	HHV	0,8	Journal_Article	Original_Analysis_w_Industry_Sources	null	electrolysis	2020	2020
+CSIRO*	2018	Low	2097,6	54,00 %	PEM	2017	2018	Small	null	LHV	0,85	Report	Original_Analysis_w_Industry_Sources	null	electrolysis	2020	2020
+CSIRO*	2018	Low	808,2	58,00 %	Alcalin	2017	2018	Large	null	null	0,85	Report	Original_Analysis_w_Industry_Sources	null	electrolysis	2020	2020
+Nel 	2020	Low	500	null	Alcalin	2017	2017	Large	null	null	null	Report	Original_Analysis_w_Industry_Sources	null	electrolysis	2020	2020
+Microbenergy	2020	Low	1150	null	PEM	2017	2017	Small	null	null	null	Interview	Original_Review_Multiple_Sources	null	electrolysis	2020	2020
+FCH	2025	Low	900	57,00 %	Alcalin	2017	2017	Small	15	LHV	null	Report	Original_Analysis_w_Industry_Sources	2017	electrolysis	2025-2030	2025-2030
+FCH	2025	Low	1000	57,00 %	PEM	2017	2017	Small	60	LHV	null	Report	Original_Analysis_w_Industry_Sources	2017	electrolysis	2025-2030	2025-2030
+FCH	2025	Low	600	null	Alcalin	2017	2017	Medium	15	null	null	Report	Original_Analysis_w_Industry_Sources	2017	electrolysis	2025-2030	2025-2030
+FCH	2025	Low	900	null	PEM	2017	2017	Medium	60	null	null	Report	Original_Analysis_w_Industry_Sources	2017	electrolysis	2025-2030	2025-2030
+FCH	2025	Low	480	null	Alcalin	2017	2017	Large	15	null	null	Report	Original_Analysis_w_Industry_Sources	2017	electrolysis	2025-2030	2025-2030
+FCH	2025	Low	700	null	PEM	2017	2017	Large	60	null	null	Report	Original_Analysis_w_Industry_Sources	2017	electrolysis	2025-2030	2025-2030
+Matute 	2025	Low	600	50,00 %	Alcalin	2014	2019	Small 	15-30	LHV	null	Journal_Article	Secondary_Source	null	electrolysis	2025-2030	2025-2030
+Matute 	2025	Low	900	53,00 %	PEM	2014	2019	Small 	30-60	LHV	null	Journal_Article	Secondary_Source	null	electrolysis	2025-2030	2025-2030
+Michalski 	2025	Low	935	null	Alcalin	2017	2017	Medium	null	null	null	Journal_Article	Original_Review_Multiple_Sources	2016	electrolysis	2025-2030	2025-2030
+Michalski 	2025	Low	1400	null	PEM	2017	2017	Medium	null	null	null	Journal_Article	Original_Review_Multiple_Sources	2016	electrolysis	2025-2030	2025-2030
+Agora	2030	High	804	84,00 %	SOEC	2017	2018	Large	null	LHV	0,8	Report	Original_Analysis_w_Industry_Sources	2017	electrolysis	2025-2030	2025-2030
+Brynolf	2030	Low	700	66,00 %	Alcalin	2010	2018	Medium	null	LHV	0,8	Journal_Article	Original_Review_Multiple_Sources	2015	electrolysis	2025-2030	2025-2030
+Brynolf 	2030	Low	800	69,00 %	PEM	2010	2018	Large 	null	LHV	null	Journal_Article	Original_Review_Multiple_Sources	2015	electrolysis	2025-2030	2025-2030
+Brynolf	2030	High	700	81,00 %	SOEC	2010	2018	Medium	null	LHV	null	Journal_Article	Original_Review_Multiple_Sources	2015	electrolysis	2025-2030	2025-2030
+IndWEDE	2030	Low	810	65,50 %	PEM	2017	2018	Large	null	LHV	0,8	Report	Original_Analysis_w_Industry_Sources	null	electrolysis	2025-2030	2025-2030
+IndWEDE	2030	Low	450	65,50 %	Alcalin	2017	2018	Large	null	LHV	0,8	Report	Original_Analysis_w_Industry_Sources	null	electrolysis	2025-2030	2025-2030
+IndWEDE	2030	High	800	84,40 %	SOEC	2017	2018	Large	null	LHV	0,8	Report	Original_Analysis_w_Industry_Sources	null	electrolysis	2025-2030	2025-2030
+Siemens 	2030	Low	500	null	Alcalin	2017	2017	Large	null	null	null	Interview	Original_Review_Multiple_Sources	2016	electrolysis	2025-2030	2025-2030
+Siemens 	2030	Low	500	null	PEM	2017	2017	Large 	null	null	null	Interview	Original_Review_Multiple_Sources	2016	electrolysis	2025-2030	2025-2030
+Agora	2050	High	600	90,00 %	SOEC	2017	2018	Large	null	LHV	0,8	Report	Original_Analysis_w_Industry_Sources	2017	electrolysis	2050+	2050+
+IndWEDE	2050	Low	510	72,20 %	PEM	2017	2018	Large	null	LHV	0,8	Report	Original_Analysis_w_Industry_Sources	null	electrolysis	2050+	2050+
+IndWEDE	2050	Low	450	72,20 %	Alcalin	2017	2018	Large	null	LHV	0,8	Report	Original_Analysis_w_Industry_Sources	null	electrolysis	2050+	2050+
+IndWEDE	2050	High	550	88,10 %	SOEC	2017	2018	Large	null	LHV	0,8	Report	Secondary_Source	null	electrolysis	2050+	2050+
+Michalski 	2050	Low	607	61,00 %	Alcalin	2015	2017	Large	null	LHV	null	Journal_Article	Original_Analysis_w_Industry_Sources	2017	electrolysis	2050+	2050+
+Michalski 	2050	Low	334	70,00 %	PEM	2015	2017	Large	null	LHV	null	Journal_Article	Original_Analysis_w_Industry_Sources	2017	electrolysis	2050+	2050+
+Schmidt	2020	Low	950	70,00 %	Alcalin	2017	2017	Medium	null	LHV	null	Journal_Article	Original_Analysis_w_Industry_Sources	2017	electrolysis	2020	2020
+Schmidt	2020	Low	1266	65,00 %	PEM	2017	2017	Medium	null	LHV	null	Journal_Article	Original_Analysis_w_Industry_Sources	2017	electrolysis	2020	2020
+Schmidt	2020	High	2500	null	SOEC	2017	2017	null	null	null	null	Journal_Article	Original_Analysis_w_Industry_Sources	2017	electrolysis	2020	2020
+Schmidt	2030	Low	550	75,00 %	Alcalin	2017	2017	Large	null	LHV	null	Journal_Article	Original_Analysis_w_Industry_Sources	2017	electrolysis	2025-2030	2025-2030
+Schmidt	2030	Low	935	72,00 %	PEM	2017	2017	Large	null	LHV	null	Journal_Article	Original_Analysis_w_Industry_Sources	2017	electrolysis	2025-2030	2025-2030
+Schmidt	2030	High	1600	null	SOEC	2017	2017	null	null	null	null	Journal_Article	Original_Analysis_w_Industry_Sources	2017	electrolysis	2025-2030	2025-2030
+Bloomberg	2019	Low	1020	61,00 %	Alcalin	2019	2019	null	null	null	null	Report	Original_Analysis_w_Industry_Sources	2019	electrolysis	2020	2020
+Bloomberg	2022	Low	722,5	61,00 %	Alcalin	2019	2019	null	null	null	null	Report	Original_Analysis_w_Industry_Sources	2019	electrolysis	2025-2030	2025-2030
+Bloomberg	2025	Low	595	61,00 %	Alcalin	2019	2019	null	null	null	null	Report	Original_Analysis_w_Industry_Sources	2019	electrolysis	2025-2030	2025-2030
+Bloomberg	2030	Low	106	61,00 %	Alcalin	2019	2019	null	null	null	null	Report	Original_Analysis_w_Industry_Sources	2019	electrolysis	2025-2030	2025-2030
+Bloomberg	2050	Low	76	61,00 %	Alcalin	2019	2019	null	null	null	null	Report	Original_Analysis_w_Industry_Sources	2019	electrolysis	2050+	2050+
+Bloombeg	2019	Low	1190	null	PEM	2019	2019	null	null	null	null	Report	Original_Analysis_w_Industry_Sources	2019	electrolysis	2020	2020
+Bloomberg	2030	Low	606	null	PEM	2019	2019	null	null	null	null	Report	Original_Analysis_w_Industry_Sources	2019	electrolysis	2025-2030	2025-2030
+Bloomberg	2050	Low	149	null	PEM	2019	2019	null	null	null	null	Report	Original_Analysis_w_Industry_Sources	2019	electrolysis	2050+	2050+
+IEA	2020	Low	425	null	Alcalin	2019	2019	null	null	null	null	Report	Original_Analysis_w_Industry_Sources	2019	electrolysis	2020	2020
+IEA	2030	Low	340	null	Alcalin	2019	2019	null	null	null	null	Report	Original_Analysis_w_Industry_Sources	2019	electrolysis	2025-2030	2025-2030
+IEA	2050	Low	170	null	Alcalin	2019	2019	null	null	null	null	Report	Original_Analysis_w_Industry_Sources	2019	electrolysis	2050+	2050+
+IEA	2020	Low	935	null	PEM	2019	2019	null	null	null	null	Report	Original_Analysis_w_Industry_Sources	2019	electrolysis	2020	2020
+IEA	2030	Low	553	null	PEM	2019	2019	null	null	null	null	Report	Original_Analysis_w_Industry_Sources	2019	electrolysis	2025-2030	2025-2030
+IEA	2050	Low	170	null	PEM	2019	2019	null	null	null	null	Report	Original_Analysis_w_Industry_Sources	2019	electrolysis	2050+	2050+
+IEA	2020	High	2380	null	SOEC	2019	2019	null	null	null	null	Report	Original_Analysis_w_Industry_Sources	2019	electrolysis	2020	2020
+IEA	2030	High	680	null	SOEC	2019	2019	null	null	null	null	Report	Original_Analysis_w_Industry_Sources	2019	electrolysis	2025-2030	2025-2030
+IEA	2050	High	425	null	SOEC	2019	2019	null	null	null	null	Report	Original_Analysis_w_Industry_Sources	2019	electrolysis	2050+	2050+
+Milzani 	2018	Low	null	67,00 %	PEM	2011	2018	null	null	LHV	null	Journal_Article	Original_Review_Multiple_Sources	null	electrolysis	2020	2020
+Milzani 	2018	Low	null	69,00 %	Alcalin	2011	2018	null	null	LHV	null	Journal_Article	Original_Review_Multiple_Sources	null	electrolysis	2020	2020
+Milzani 	2018	High	null	83,00 %	SOEC	2011	2018	null	null	LHV	null	Journal_Article	Original_Review_Multiple_Sources	null	electrolysis	2020	2020

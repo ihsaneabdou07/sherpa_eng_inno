@@ -1,0 +1,23 @@
+site:
+  name: Laayoune
+  latitude: 27.15        # check on a map before use
+  longitude: -13.20
+  altitude_m: 64         # approximate, check
+  timezone: UTC
+  weather_file: data/processed/site_laayoune_tmy.csv
+
+demand:
+  product: H2            # H2 | NH3 | MeOH
+  annual_h2_t: 10000
+
+finance:
+  discount_rate: 0.08
+  discount_rate_range: [0.06, 0.10]
+  lifetime_years: 25
+
+sizing_ranges:
+  pv_mw: [0, 600]
+  wind_mw: [0, 600]
+  electrolyzer_mw: [40, 120]
+  battery_mwh: [0, 800]
+  h2_storage_t: [0, 200]
