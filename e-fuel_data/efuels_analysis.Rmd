@@ -1,0 +1,195 @@
+---
+title: "E-fuels liquides — analyse de pré-faisabilité pour le Maroc"
+subtitle: "Sherpa Engineering — module e-fuels du prototype d'aide à la décision"
+author: "Sherpa Engineering"
+date: "`r format(Sys.Date(), '%d/%m/%Y')`"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    df_print: paged
+params:
+  xlsx_path: "efuels_maroc_base_donnees.xlsx"
+  elec_price: 30        # EUR/MWh [HYP]
+  flh: 5000             # heures pleine charge [HYP]
+  tech: "PEM"           # AEL | PEM | SOEC
+  co2_type: "point_source"   # point_source | dac
+  wacc: 0.08            # [HYP]
+  life: 20              # ans [HYP]
+  fx: 0.92              # EUR par USD [HYP]
+  water_price: 2.0      # EUR/m3 [HYP]
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE, fig.width = 8, fig.height = 4.5)
+library(readxl); library(dplyr); library(tidyr); library(ggplot2); library(knitr); library(scales)
+```
+
+# 1. Objet et sources
+
+Ce document reproduit le **Calculateur_LCOE** du classeur Excel et exploite les données de l'article
+Colelli et al. (2026), *Energy Conversion and Management*, doi:10.1016/j.enconman.2025.120529 **[ART]**.
+Les paramètres marqués **[HYP]** sont des hypothèses Sherpa à valider avec des données Maroc.
+Ordre de grandeur de pré-faisabilité : ±30–50 %.
+
+# 2. Paramètres
+
+```{r params}
+kable(data.frame(
+  Paramètre = c("Prix électricité (EUR/MWh)", "Heures pleine charge (h/an)", "Électrolyse", "Source CO2",
+                "WACC", "Durée de vie (ans)", "EUR par USD", "Eau (EUR/m3)"),
+  Valeur = c(params$elec_price, params$flh, params$tech, params$co2_type,
+             params$wacc, params$life, params$fx, params$water_price)))
+```
+
+# 3. Modèle
+
+```{r model}
+# Électrolyseurs [ART] Table 4 : min/max (SOEC capex max et opex = HYP)
+el <- list(
+  AEL  = list(capex = c(800, 1500),  kwh_nm3 = c(5.0, 5.9), opex = c(2, 3)),
+  PEM  = list(capex = c(1400, 2100), kwh_nm3 = c(5.0, 5.6), opex = c(3, 5)),
+  SOEC = list(capex = c(2000, 2500), kwh_nm3 = c(3.7, 3.9), opex = c(3, 5))
+)
+co2_cost_usd <- list(point_source = c(50, 100), dac = c(235, 600))     # [ART] Table 2
+co2_energy   <- list(point_source = 0.25, dac = 2.75)                  # MWh/t [HYP]/[ART]
+
+M <- c(H2 = 2.016, CO2 = 44.01, N2 = 28.014, MeOH = 32.04, DME = 46.07, NH3 = 17.031, CH2 = 14.027)
+yield <- 0.95; util <- 0.90; synth_opex <- 0.04; h2_dens <- 0.08988     # [HYP]
+n2_kwh_kg <- 0.11                                                         # [ART]
+
+products <- tibble::tribble(
+  ~product,     ~lhv, ~h2,                              ~co2,                  ~n2,                         ~capex_min, ~capex_max, ~synth_kwh_t, ~fossil_min, ~fossil_max,
+  "e-methanol",  19.9, 3*M["H2"]/M["MeOH"],             M["CO2"]/M["MeOH"],    0,                           300,        1200,       150,          300,         450,
+  "e-DME",       28.4, 6*M["H2"]/M["DME"],              2*M["CO2"]/M["DME"],   0,                           300,        1200,       150,          400,         700,
+  "e-kerosene",  43.1, 3*M["H2"]/M["CH2"],              M["CO2"]/M["CH2"],     0,                           1000,       1800,       500,          650,         900,
+  "e-diesel",    43.0, 3*M["H2"]/M["CH2"],              M["CO2"]/M["CH2"],     0,                           1000,       1800,       500,          600,         900,
+  "e-gasoline",  43.4, 3*M["H2"]/M["CH2"],              M["CO2"]/M["CH2"],     0,                           600,        600,        150,          600,         900,
+  "e-ammonia",   18.6, 3*M["H2"]/(2*M["NH3"]),          0,                     M["N2"]/(2*M["NH3"]),        1300,       2200,       150,          350,         600
+) %>% mutate(across(c(h2, co2, n2), ~ as.numeric(.x) / yield))
+
+crf <- function(w, n) if (w == 0) 1 / n else w * (1 + w)^n / ((1 + w)^n - 1)
+
+lcoh <- function(price = params$elec_price, flh = params$flh, tech = params$tech,
+                 wacc = params$wacc, life = params$life, water_price = params$water_price) {
+  e <- el[[tech]]
+  kwh_kg <- mean(e$kwh_nm3) / h2_dens
+  capex <- mean(e$capex); opex <- mean(e$opex) / 100
+  water_l <- 8.92 * 1.25
+  tibble(kwh_kg = kwh_kg,
+         electricity = price * kwh_kg / 1000,
+         capex_opex  = capex * (crf(wacc, life) + opex) / (flh / kwh_kg),
+         water       = water_price * water_l / 1000,
+         water_l     = water_l) %>% mutate(total = electricity + capex_opex + water)
+}
+
+product_costs <- function(price = params$elec_price, flh = params$flh, tech = params$tech,
+                          co2_type = params$co2_type, wacc = params$wacc, life = params$life) {
+  h <- lcoh(price, flh, tech, wacc, life)
+  co2_eur <- mean(co2_cost_usd[[co2_type]]) * params$fx
+  products %>% rowwise() %>% mutate(
+    mwh_t        = lhv * 1000 / 3600,
+    cost_h2      = h2 * 1000 * h$total,
+    cost_co2     = co2 * co2_eur,
+    kw_fuel_tpy  = mwh_t * 1000 / 8760 / util,
+    cost_capex   = kw_fuel_tpy * mean(c(capex_min, capex_max)) * (crf(wacc, life) + synth_opex),
+    synth_elec   = synth_kwh_t + n2 * 1000 * n2_kwh_kg,
+    cost_elec    = synth_elec / 1000 * price,
+    total_eur_t  = cost_h2 + cost_co2 + cost_capex + cost_elec,
+    eur_mwh      = total_eur_t / mwh_t,
+    elec_mwh_t   = h2 * 1000 * h$kwh_kg / 1000 + co2 * co2_energy[[co2_type]] + synth_elec / 1000,
+    efficiency   = mwh_t / elec_mwh_t,
+    water_m3_t   = h2 * h$water_l,
+    h2_share     = cost_h2 / total_eur_t,
+    x_fossil     = total_eur_t / mean(c(fossil_min, fossil_max))
+  ) %>% ungroup()
+}
+
+h <- lcoh()
+kable(round(h, 3), caption = "Coût de l'hydrogène (EUR/kg H2) — article : 3 à 6 EUR/kg")
+```
+
+# 4. Coût de production par e-fuel
+
+```{r costs}
+res <- product_costs()
+kable(res %>% transmute(Produit = product,
+                        `Coût total (EUR/t)` = round(total_eur_t),
+                        `EUR/MWh PCI` = round(eur_mwh),
+                        `Efficacité élec.→carburant` = percent(efficiency, accuracy = 1),
+                        `Eau (m3/t)` = round(water_m3_t, 1),
+                        `Part H2` = percent(h2_share, accuracy = 1),
+                        `Coût / prix fossile (x)` = round(x_fossil, 1)))
+```
+
+```{r costs_plot}
+res %>%
+  select(product, cost_h2, cost_co2, cost_capex, cost_elec) %>%
+  pivot_longer(-product, names_to = "poste", values_to = "eur_t") %>%
+  mutate(poste = recode(poste, cost_h2 = "Hydrogène", cost_co2 = "CO2",
+                        cost_capex = "CAPEX synthèse", cost_elec = "Électricité synthèse/N2")) %>%
+  ggplot(aes(reorder(product, eur_t, sum), eur_t, fill = poste)) +
+  geom_col() + coord_flip() +
+  labs(x = NULL, y = "EUR/t", fill = NULL, title = "Décomposition du coût de production") +
+  theme_minimal()
+```
+
+**Lecture.** L'hydrogène représente la majorité du coût (≈ 80–86 %) : le prix de l'électricité et les heures de
+charge de l'électrolyseur sont les leviers dominants. Les « rendements de procédé » 59–89 % de l'article
+concernent la conversion seule ; l'efficacité globale calculée ici est plus basse (≈ 40–50 %).
+
+# 5. Sensibilité
+
+```{r sens}
+grid <- expand.grid(price = c(15, 20, 25, 30, 40, 50, 60, 80), flh = c(3000, 4000, 5000, 6000, 7000, 8000))
+grid$lcoh <- mapply(function(p, f) lcoh(price = p, flh = f)$total, grid$price, grid$flh)
+ggplot(grid, aes(factor(flh), factor(price), fill = lcoh)) +
+  geom_tile() + geom_text(aes(label = round(lcoh, 1)), size = 3) +
+  scale_fill_gradient(low = "#D9EAD3", high = "#E06666") +
+  labs(x = "Heures pleine charge (h/an)", y = "Prix électricité (EUR/MWh)", fill = "EUR/kg H2",
+       title = "LCOH selon prix de l'électricité et heures de charge") + theme_minimal()
+```
+
+```{r sens_morocco}
+sc <- expand.grid(price = c(22, 30, 45), product = products$product, stringsAsFactors = FALSE)
+sc$total <- mapply(function(p, pr) product_costs(price = p) %>% filter(product == pr) %>% pull(total_eur_t),
+                   sc$price, sc$product)
+ggplot(sc, aes(product, total, fill = factor(price))) + geom_col(position = "dodge") +
+  labs(x = NULL, y = "EUR/t", fill = "EUR/MWh [HYP]", title = "Scénarios de prix d'électricité au Maroc") + theme_minimal()
+```
+
+# 6. Projets mondiaux (Table 5 de l'article)
+
+```{r projects}
+pj <- read_excel(params$xlsx_path, sheet = "Projets_35", skip = 3, n_max = 35)
+names(pj)[1:9] <- c("n", "projet", "pays", "efuel", "co2", "energie", "capacite_kt", "trl_min", "trl_max")
+pj <- pj %>% mutate(across(c(capacite_kt, trl_min, trl_max), as.numeric))
+kable(data.frame(Indicateur = c("Projets", "Capacité annoncée totale (kt/an)", "Médiane (kt/an)", "TRL max moyen"),
+                 Valeur = c(nrow(pj), round(sum(pj$capacite_kt)), round(median(pj$capacite_kt), 1), round(mean(pj$trl_max), 1))))
+pj %>% count(pays, sort = TRUE) %>% head(8) %>% kable(caption = "Nombre de projets par pays")
+pj %>% mutate(type = case_when(grepl("ammonia", efuel) ~ "e-ammoniac",
+                               grepl("methanol", efuel) ~ "e-méthanol",
+                               grepl("kerosene", efuel) ~ "e-kérosène", TRUE ~ "autre")) %>%
+  group_by(type) %>% summarise(projets = n(), capacite_kt = sum(capacite_kt)) %>% kable()
+```
+
+# 7. Matrice de décision
+
+```{r decision}
+md <- read_excel(params$xlsx_path, sheet = "Matrice_Decision", range = "A4:H11")
+kable(md, caption = "Poids et notes (1-5) — jugement préliminaire [HYP]")
+w <- md$Poids; sc <- as.matrix(md[, -(1:2)])
+score <- colSums(sc * w) / sum(w)
+kable(data.frame(Produit = names(score), Score = round(score, 2), Rang = rank(-score, ties.method = "min")) %>% arrange(Rang))
+```
+
+# 8. Limites
+
+* Pré-faisabilité (±30–50 %) : pas de stockage, réseau, terrain, transport ni financement intercalaire.
+* Les valeurs **[HYP]** (prix ENR, heures de charge, CAPEX FT, facteur Maroc) dominent le résultat : les valider d'abord.
+* Contexte Maroc : voir la feuille `Maroc_Contexte` (confiance moyenne/faible).
+
+```{r export}
+write.csv2(res %>% select(product, total_eur_t, eur_mwh, efficiency, water_m3_t, h2_share, x_fossil),
+           "efuels_cout_par_produit.csv", row.names = FALSE)
+```
