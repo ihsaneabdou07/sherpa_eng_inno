@@ -1,0 +1,7 @@
+domaine,technologie,source_ref,capex_unitaire,capex_annee,opex_pourcent,rendement_ou_efficacite,consommation_spec_electricite,consommation_spec_eau,emissions_co2,duree_vie_ans,maturite_trl
+1_Production_electricite,PV_Solaire,NREL ATB / PVGIS,650,2024,2.0,0.20,0,0,20,25,9
+1_Production_electricite,Eolien_Terrestre,Global Wind Atlas / IRENA,1250,2024,3.0,0.35,0,0,11,25,9
+2_Stockage,Batterie_Li-Ion,NREL ATB,300,2024,1.5,0.90,0,0,50,15,8
+3_Eau,Osmose_Inverse,Desalination Morocco 2021,1200,2024,4.0,0,3.5,1.5,300,20,9
+4_Hydrogene,Electrolyseur_PEM,Institut de Potsdam / Delft,800,2024,3.5,0.65,55,10,0,15,7
+5_Conversion_efuels,Synthese_Methanol,PtX Business Analyser,1500,2024,4.0,0.70,1.2,0,0,20,6
