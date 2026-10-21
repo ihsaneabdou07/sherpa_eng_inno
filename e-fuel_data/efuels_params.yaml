@@ -1,0 +1,49 @@
+# config/efuels_params.yaml — paramètres par défaut du module e-fuels (Sherpa Engineering)
+# [ART] = Colelli et al. 2026 (doi:10.1016/j.enconman.2025.120529) ; [HYP] = hypothèse à valider.
+site:
+  name: "Maroc — site générique ENR hybride"
+  elec_price_eur_mwh: 30        # [HYP] plage 22-45
+  electrolyser_flh: 5000        # [HYP] plage 3500-7500
+finance:
+  wacc: 0.08                    # [HYP]
+  life_years: 20                # [HYP]
+  fx_eur_per_usd: 0.92          # [HYP]
+electrolysis:
+  tech: PEM                     # AEL | PEM | SOEC
+  capex_eur_kw: {AEL: [800, 1500], PEM: [1400, 2100], SOEC: [2000, 2500]}   # [ART] Table 4 (SOEC max = HYP)
+  kwh_per_nm3:  {AEL: [5.0, 5.9],  PEM: [5.0, 5.6],   SOEC: [3.7, 3.9]}     # [ART] Table 4
+  opex_pct:     {AEL: [2, 3],      PEM: [3, 5],       SOEC: [3, 5]}         # [ART] (SOEC = HYP)
+co2:
+  type: point_source            # point_source | dac
+  cost_usd_per_t: {point_source: [50, 100], dac: [235, 600]}                # [ART] Table 2
+water:
+  eur_per_m3: 2.0               # [HYP]
+  stoich_l_per_kg_h2: 8.92      # [ART]
+  overuse: 0.25                 # [ART]
+synthesis:
+  utilisation: 0.90             # [HYP]
+  opex_pct: 0.04                # [HYP]
+  material_yield: 0.95          # [HYP]
+  capex_eur_per_kw_fuel:        # [ART] proche terme ; FT = HYP
+    e-methanol: [300, 1200]
+    e-DME: [300, 1200]
+    e-kerosene: [1000, 1800]
+    e-diesel: [1000, 1800]
+    e-gasoline: [600, 600]
+    e-ammonia: [1300, 2200]
+capex:
+  location_factor: 1.0          # [HYP] 1.0 = niveau Europe/article
+  indirect_pct: 0.20            # [HYP]
+  contingency_pct: 0.15         # [HYP]
+  co2_capital_share: 0.60       # [HYP]
+simulation:                     # economics/hourly_sim.py
+  pv_mw: 300                    # [HYP] exemple
+  wind_mw: 200                  # [HYP] exemple
+  electrolyser_mw: 250          # [HYP] exemple
+  min_load: 0.10                # [HYP]
+  pv_lcoe_eur_mwh: 22           # [HYP]
+  wind_lcoe_eur_mwh: 30         # [HYP]
+  battery_mwh: 0
+  battery_mw: 0
+  battery_round_trip_eff: 0.90  # [HYP]
+  synthetic_profiles: {pv_cf: 0.30, wind_cf: 0.45, latitude: 28.0, seed: 1}   # démo, NON mesuré
